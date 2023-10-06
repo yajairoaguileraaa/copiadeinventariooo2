@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Control inventario</string>
+    <string name="crear_una_cuenta">Crear cuenta</string>
+    <string name="omitir">Omitir</string>
+    <string name="productos">Productos</string>
+    <string name="inicio">Inicio</string>
+    <string name="todo">TODO</string>
+    <string name="cantidad">Cantidad</string>
+    <string name="codigo">Codigo</string>
+    <string name="nombre">Nombre</string>
+    <string name="precio">precio</string>
+</resources>
