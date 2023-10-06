@@ -41,7 +41,7 @@ public class Main_Inventarioo extends AppCompatActivity {
     RecyclerView recycleProductos;
 
 
-    Button salir;
+    Button salir, btnEditar;
 
 
     Spinner spinner;
@@ -116,6 +116,38 @@ public class Main_Inventarioo extends AppCompatActivity {
 
 
 
+        Button btnEditarP = findViewById(R.id.btnEditarP);
+        btnEditarP.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Productos productoSeleccionado = null;
+                for (Productos producto : productosList) {
+                    if (producto.isSelected()) {
+                        if (productoSeleccionado != null) {
+                            Toast.makeText(Main_Inventarioo.this, "Solo se puede editar un producto a la vez", Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+                        productoSeleccionado = producto;
+                    }
+                }
+
+                if (productoSeleccionado == null) {
+                    Toast.makeText(Main_Inventarioo.this, "Debe seleccionar un producto para editar", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                Intent intent = new Intent(Main_Inventarioo.this, EditarProducto.class);
+
+                intent.putExtra("PRODUCTO_ID", productoSeleccionado.getId());
+
+                startActivity(intent);
+            }
+        });
+
+
+
+
+
         EditText editTextSearch = findViewById(R.id.editTextSearch);
         editTextSearch.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
@@ -136,15 +168,7 @@ public class Main_Inventarioo extends AppCompatActivity {
         });
 
 
-        Button salir= (Button) findViewById(R.id.boton_salir);
 
-        salir.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-                System.exit(0);
-            }
-        });
 
     }
 
