@@ -41,7 +41,7 @@ public class ProductosAdapter extends RecyclerView.Adapter<ProductosAdapter.View
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.txtNombre.setText(productosList.get(position).getNombre());
-        holder.txtCodigo.setText(productosList.get(position).getCodigo());
+        holder.txtCodigo.setText(String.valueOf(productosList.get(position).getCodigo()));
         holder.txtCantidad.setText(productosList.get(position).getCantidad());
         holder.txtPrecio.setText(productosList.get(position).getPrecio());
 
@@ -54,10 +54,16 @@ public class ProductosAdapter extends RecyclerView.Adapter<ProductosAdapter.View
         holder.checkBox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                productosList.get(position).setSelected(holder.checkBox.isChecked());
+                int position = holder.getAdapterPosition(); // Obtén la posición actual
+                if (position != RecyclerView.NO_POSITION) { // Comprueba si la posición es válida
+                    productosList.get(position).setSelected(holder.checkBox.isChecked());
+                }
             }
         });
     }
+
+
+
 
     @Override
     public int getItemCount() {

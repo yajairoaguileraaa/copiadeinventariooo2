@@ -45,6 +45,8 @@ dependencies {
 
     //para leer el codigo de barra
 
+    implementation ("com.journeyapps:zxing-android-embedded:4.1.0")
+
 
 
 

@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity222"
+    tools:context=".MainActivity"
     android:orientation="vertical"
     android:background="@drawable/fondodegradado">
 
@@ -70,14 +70,17 @@
 
             android:background="@drawable/bordeee" />
 
+
+
+
         <Button
-            android:id="@+id/boton_salir"
+            android:id="@+id/btnEditarP"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Salir"
-
+            android:text="Editar"
             android:background="@drawable/bordeee" />
+
     </LinearLayout>
 
 

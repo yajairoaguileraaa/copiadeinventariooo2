@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/fondodegradado"
-    tools:context=".MainActivity222">
+    tools:context=".MainActivity">
 
     <EditText
         android:id="@+id/editTextText"

@@ -4,7 +4,7 @@ public class Productos {
 
     private int id;
     private String nombre;
-    private String codigo;
+    private long codigo;
     private String cantidad;
     private String precio;
 
@@ -12,9 +12,7 @@ public class Productos {
 
     private boolean isSelected;
 
-
-
-    public Productos(int id, String nombre, String codigo, String cantidad, String precio, String foto) {
+    public Productos(int id, String nombre, long codigo, String cantidad, String precio, String foto) { // Cambiado de String a long
         this.id = id;
         this.nombre = nombre;
         this.codigo = codigo;
@@ -39,16 +37,15 @@ public class Productos {
         this.nombre = nombre;
     }
 
-    public String getCodigo() {
+    public long getCodigo() {
         return codigo;
     }
 
-    public void setCodigo(String codigo) {
+    public void setCodigo(long codigo) {
         this.codigo = codigo;
     }
 
     public String getCantidad() {
-
         return cantidad;
     }
 
@@ -82,16 +79,16 @@ public class Productos {
     }
 
 
-
     @Override
     public String toString() {
         return "Productos{" +
                 "id=" + id +
                 ", nombre='" + nombre + '\'' +
-                ", codigo='" + codigo + '\'' +
+                ", codigo=" + codigo +
                 ", cantidad='" + cantidad + '\'' +
                 ", precio='" + precio + '\'' +
                 ", foto='" + foto + '\'' +
+                ", isSelected=" + isSelected +
                 '}';
     }
 }

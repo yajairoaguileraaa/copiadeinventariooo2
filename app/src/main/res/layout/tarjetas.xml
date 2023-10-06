@@ -1,35 +1,37 @@
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_margin="5dp"
-    android:elevation="5dp">
 
-    <!-- Contenedor principal -->
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:layout_margin="5dp"
+android:elevation="5dp">
+
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
+        android:background="@color/Color4"
         android:orientation="horizontal"
-        android:padding="5dp"
-        android:background="@color/Color4">
+        android:padding="5dp">
 
-        <!-- Imagen del producto -->
         <ImageView
             android:id="@+id/imgFoto"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:contentDescription="@string/todo" />
 
-        <!-- Detalles del producto -->
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:layout_marginStart="5dp"
+            android:layout_weight="1"
             android:orientation="vertical">
 
-            <!-- Nombre del producto -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Nombre:" />
+
             <TextView
                 android:id="@+id/txtNombre"
                 android:layout_width="match_parent"
@@ -38,7 +40,11 @@
                 android:textColor="@color/black"
                 android:textSize="18sp" />
 
-            <!-- Código del producto -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Código:" />
+
             <TextView
                 android:id="@+id/txtCodigo"
                 android:layout_width="match_parent"
@@ -46,7 +52,11 @@
                 android:text="@string/codigo"
                 android:textColor="@color/black" />
 
-            <!-- Cantidad del producto -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Cantidad:" />
+
             <TextView
                 android:id="@+id/txtCantidad"
                 android:layout_width="match_parent"
@@ -54,7 +64,11 @@
                 android:text="@string/cantidad"
                 android:textColor="@color/black" />
 
-            <!-- Precio del producto -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Precio:" />
+
             <TextView
                 android:id="@+id/txtPrecio"
                 android:layout_width="match_parent"
@@ -63,14 +77,11 @@
                 android:textColor="@color/black" />
         </LinearLayout>
 
-        <!-- Checkbox para seleccionar el producto -->
         <CheckBox
             android:id="@+id/checkBox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="seleccionar" />
-
-
-
     </LinearLayout>
 </androidx.cardview.widget.CardView>
+
