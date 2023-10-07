@@ -151,7 +151,6 @@ public class EditarProducto extends AppCompatActivity {
 
         Toast.makeText(this, "Producto actualizado con éxito", Toast.LENGTH_SHORT).show();
 
-        // Limpia los campos de texto
         editTextNombre.setText("");
         editTextCodigo.setText("");
         editTextCantidad.setText("");
