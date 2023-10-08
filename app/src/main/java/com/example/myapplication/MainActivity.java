@@ -1,28 +1,31 @@
 package com.example.myapplication;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
 import android.annotation.SuppressLint;
+import android.app.KeyguardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+import android.Manifest;
+import androidx.biometric.BiometricManager;
+
+
 
 import com.example.myapplication.Adapter.Database;
-
-
 public class MainActivity extends AppCompatActivity {
 
-    Button crearcuenta;
+    Button crearcuenta, cerrar, irinventario, loginHuella;
+    ;
     EditText edUsername, edPassword;
-
-    Button cerrar;
-
-    Button irinventario;
 
     @SuppressLint("MissingInflatedId")
 
@@ -68,7 +71,6 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-
         irinventario = (Button)findViewById(R.id.button5);
         irinventario.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -77,18 +79,6 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(irinventario);
             }
         });
-
-
-
-
-
-
-
-
-
-
-
-
         Button cerrar= (Button) findViewById(R.id.button4);
         cerrar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -96,18 +86,31 @@ public class MainActivity extends AppCompatActivity {
                 finish();
             }
         });
+        loginHuella = findViewById(R.id.loginHuella);
 
+        loginHuella.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    BiometricManager biometricManager = BiometricManager.from(MainActivity.this);
 
+                    if (biometricManager.canAuthenticate() != BiometricManager.BIOMETRIC_SUCCESS) {
+                        Toast.makeText(getApplicationContext(),"Tu dispositivo no soporta la autenticación biométrica o no hay credenciales biométricas registradas",Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(getApplicationContext(),"Coloca tu dedo en el sensor",Toast.LENGTH_SHORT).show();
+
+                        FingerprintHandler fingerprintHandler = new FingerprintHandler(MainActivity.this);
+                        fingerprintHandler.startAuth();
+                    }
+                }
+            }
+        });
 
 
 
 
 
     }
-
-
-
-
 }
 
 

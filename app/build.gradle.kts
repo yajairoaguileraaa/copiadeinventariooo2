@@ -41,6 +41,8 @@ dependencies {
     //El glide
 
     implementation("com.github.bumptech.glide:glide:4.11.0")
+    implementation("androidx.biometric:biometric:1.1.0")
+
     annotationProcessor("com.github.bumptech.glide:compiler:4.11.0")
 
     //para leer el codigo de barra
