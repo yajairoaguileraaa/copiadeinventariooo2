@@ -20,6 +20,7 @@ import androidx.biometric.BiometricManager;
 
 
 
+
 import com.example.myapplication.Adapter.Database;
 public class MainActivity extends AppCompatActivity {
 
@@ -105,11 +106,6 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-
-
-
-
-
     }
 }
 

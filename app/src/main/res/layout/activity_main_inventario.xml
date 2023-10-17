@@ -8,12 +8,35 @@
     android:orientation="vertical"
     android:background="@drawable/fondodegradado">
 
-    <EditText
-        android:id="@+id/editTextSearch"
+    <LinearLayout
+        android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Introduce el nombre del producto" />
+        android:background="@color/Color4">
 
+        <Button
+            android:id="@+id/menu_button2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Escaner" />
+
+        <EditText
+            android:id="@+id/buscador2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.5"
+            android:inputType="text"
+            android:hint="Buscar..."
+            />
+
+        <Button
+            android:id="@+id/btnbuscador"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Buscar" />
+    </LinearLayout>
 
     <LinearLayout
         android:orientation="horizontal"
@@ -29,12 +52,6 @@
             android:textColor="@color/black"
             android:textSize="20sp" />
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/button7"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/inicio"
-            android:textColor="@color/black" />
     </LinearLayout>
 
     <Spinner
@@ -58,8 +75,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Crear"
-            android:background="@drawable/bordeee" />
+            android:background="@drawable/bordeee"
+            android:text="Crear" />
 
         <Button
             android:id="@+id/boton_eliminar"
@@ -70,19 +87,13 @@
 
             android:background="@drawable/bordeee" />
 
-
-
-
         <Button
             android:id="@+id/btnEditarP"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Editar"
+
             android:background="@drawable/bordeee" />
-
     </LinearLayout>
-
-
-
 </LinearLayout>

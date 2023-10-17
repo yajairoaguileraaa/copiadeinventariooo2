@@ -11,14 +11,18 @@ public class Productos {
     private String foto;
 
     private boolean isSelected;
+    private boolean isFound;
 
-    public Productos(int id, String nombre, long codigo, String cantidad, String precio, String foto) { // Cambiado de String a long
+
+    public Productos(int id, String nombre, long codigo, String cantidad, String precio, String foto) {
         this.id = id;
         this.nombre = nombre;
         this.codigo = codigo;
         this.cantidad = cantidad;
         this.precio = precio;
         this.foto = foto;
+        this.isSelected = false;
+        this.isFound = false;
     }
 
     public int getId() {
@@ -78,6 +82,14 @@ public class Productos {
         isSelected = selected;
     }
 
+    public boolean isFound() {
+        return isFound;
+    }
+
+    public void setFound(boolean found) {
+        isFound = found;
+    }
+
 
     @Override
     public String toString() {
@@ -89,6 +101,7 @@ public class Productos {
                 ", precio='" + precio + '\'' +
                 ", foto='" + foto + '\'' +
                 ", isSelected=" + isSelected +
+                ", isFound=" + isFound +
                 '}';
     }
 }

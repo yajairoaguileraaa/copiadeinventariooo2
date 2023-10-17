@@ -1,6 +1,7 @@
 package com.example.myapplication.Adapter;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,7 +20,6 @@ import java.util.List;
 public class ProductosAdapter extends RecyclerView.Adapter<ProductosAdapter.ViewHolder> {
 
     private List<Productos> productosList;
-
     private Context context;
 
     public ProductosAdapter(List<Productos> productosList, Context context) {
@@ -40,34 +40,51 @@ public class ProductosAdapter extends RecyclerView.Adapter<ProductosAdapter.View
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.txtNombre.setText(productosList.get(position).getNombre());
-        holder.txtCodigo.setText(String.valueOf(productosList.get(position).getCodigo()));
-        holder.txtCantidad.setText(productosList.get(position).getCantidad());
-        holder.txtPrecio.setText(productosList.get(position).getPrecio());
+        Productos producto = productosList.get(position);
+        holder.txtNombre.setText(producto.getNombre());
+        holder.txtCodigo.setText(String.valueOf(producto.getCodigo()));
+        holder.txtCantidad.setText(producto.getCantidad());
+        holder.txtPrecio.setText(producto.getPrecio());
 
         Glide.with(context)
-                .load(productosList.get(position).getFoto())
+                .load(producto.getFoto())
                 .centerCrop()
                 .into(holder.imgFoto);
 
-        holder.checkBox.setChecked(productosList.get(position).isSelected());
+        holder.checkBox.setChecked(producto.isSelected());
         holder.checkBox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int position = holder.getAdapterPosition(); // Obtén la posición actual
-                if (position != RecyclerView.NO_POSITION) { // Comprueba si la posición es válida
+                int position = holder.getAdapterPosition();
+                if (position != RecyclerView.NO_POSITION) {
                     productosList.get(position).setSelected(holder.checkBox.isChecked());
                 }
             }
         });
+
+        if (producto.isFound()) {
+            holder.itemView.setBackgroundColor(Color.YELLOW);
+        } else {
+            holder.itemView.setBackgroundColor(Color.WHITE);
+        }
+
+
+
+
     }
-
-
-
 
     @Override
     public int getItemCount() {
         return productosList.size();
+    }
+
+    public Productos buscarProductoPorCodigo(long codigo) {
+        for (Productos producto : productosList) {
+            if (producto.getCodigo() == codigo) {
+                return producto;
+            }
+        }
+        return null;
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder{

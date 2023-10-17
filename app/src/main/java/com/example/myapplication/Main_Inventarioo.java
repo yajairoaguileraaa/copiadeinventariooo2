@@ -1,11 +1,11 @@
 package com.example.myapplication;
-
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -16,36 +16,28 @@ import android.widget.TextView;
 import android.view.KeyEvent;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Toast;
-
+import android.widget.Toolbar;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.myapplication.Adapter.ProductosAdapter;
 import com.example.myapplication.Adapter.Productos;
-
+import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
 import org.jetbrains.annotations.NotNull;
-
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-
 public class Main_Inventarioo extends AppCompatActivity {
+    private EditText buscador;
 
     public static List<Productos> productosList = new ArrayList<>();
     public static ProductosAdapter productosAdapter;
-
     Button crearproducto, boton_eliminar;
-
     RecyclerView recycleProductos;
-
-
-    Button salir, btnEditar;
-
-
+    Button salir, btnEditar, btnbuscador;
     Spinner spinner;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,7 +62,6 @@ public class Main_Inventarioo extends AppCompatActivity {
                 startActivity(crearproducto);
             }
         });
-
         boton_eliminar = (Button)findViewById(R.id.boton_eliminar);
         boton_eliminar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -113,9 +104,6 @@ public class Main_Inventarioo extends AppCompatActivity {
                         .show();
             }
         });
-
-
-
         Button btnEditarP = findViewById(R.id.btnEditarP);
         btnEditarP.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -145,54 +133,65 @@ public class Main_Inventarioo extends AppCompatActivity {
         });
 
 
+        RecyclerView recyclerView = findViewById(R.id.recycler1);
+        productosAdapter = new ProductosAdapter(productosList, this);
+        recyclerView.setAdapter(productosAdapter);
 
+        Button btnbuscarporcodigo = findViewById(R.id.btnbuscador);
+        buscador = findViewById(R.id.buscador2);
 
-
-        EditText editTextSearch = findViewById(R.id.editTextSearch);
-        editTextSearch.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+        btnbuscarporcodigo.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                    String nombre = editTextSearch.getText().toString();
-                    List<Productos> productosEncontrados = buscarProductoPorNombre(nombre);
-                    if (!productosEncontrados.isEmpty()) {
-                        productosAdapter.setProductos(productosEncontrados);
-                        productosAdapter.notifyDataSetChanged();
-                    } else {
-                        Toast.makeText(Main_Inventarioo.this, "No se encontraron productos con ese nombre", Toast.LENGTH_SHORT).show();
-                    }
-                    return true;
+            public void onClick(View v) {
+                long codigo = Long.parseLong(buscador.getText().toString());
+                Productos producto = productosAdapter.buscarProductoPorCodigo(codigo);
+                if (producto != null) {
+                    producto.setFound(true);
+                    int position = productosList.indexOf(producto);
+                    productosAdapter.notifyItemChanged(position);
+                    recyclerView.smoothScrollToPosition(position);
+                    buscador.setText("");
+
+                } else {
+                    Toast.makeText(Main_Inventarioo.this, "Producto no encontrado", Toast.LENGTH_SHORT).show();
                 }
-                return false;
             }
         });
 
-
-
+        Button btnScan2 = findViewById(R.id.menu_button2);
+        btnScan2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                IntentIntegrator integrador = new IntentIntegrator(Main_Inventarioo.this);
+                integrador.setDesiredBarcodeFormats(IntentIntegrator.ALL_CODE_TYPES);
+                integrador.setPrompt("Lector de codigos");
+                integrador.setCameraId(0);
+                integrador.setBeepEnabled(true);
+                integrador.setBarcodeImageEnabled(true);
+                integrador.initiateScan();
+            }
+        });
 
     }
-
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
+        if (result != null) {
+            if (result.getContents() == null) {
+                Toast.makeText(this, "Lectura cancelada", Toast.LENGTH_LONG).show();
+            } else {
+                Toast.makeText(this, result.getContents(), Toast.LENGTH_LONG).show();
+                buscador.setText(result.getContents());
+            }
+        } else {
+            super.onActivityResult(requestCode, resultCode, data);
+        }
+    }
     private void inicializarElementos() {
         recycleProductos = findViewById(R.id.recycler1);
         recycleProductos.setLayoutManager(new LinearLayoutManager(this));
 
         productosAdapter = new ProductosAdapter(productosList,this);
         recycleProductos.setAdapter(productosAdapter);
-    }
-
-    public List<Productos> buscarProductoPorNombre(String nombre) {
-        List<Productos> productosEncontrados = new ArrayList<>();
-        for (Productos producto : productosList) {
-            if (producto.getNombre().toLowerCase().contains(nombre.toLowerCase())) {
-                productosEncontrados.add(producto);
-            }
-        }
-        return productosEncontrados;
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main_menu,menu);
-        return super.onCreateOptionsMenu(menu);
     }
 }
