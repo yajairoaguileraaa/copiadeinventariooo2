@@ -1,43 +1,48 @@
 package com.example.myapplication;
-import android.annotation.SuppressLint;
+
 import android.app.AlertDialog;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.UiModeManager;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
-import android.widget.TextView;
-import android.view.KeyEvent;
-import android.view.inputmethod.EditorInfo;
 import android.widget.Toast;
-import android.widget.Toolbar;
-import androidx.annotation.NonNull;
+
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import com.example.myapplication.Adapter.ProductosAdapter;
+
 import com.example.myapplication.Adapter.Productos;
+import com.example.myapplication.Adapter.ProductosAdapter;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
-import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+
 public class Main_Inventarioo extends AppCompatActivity {
     private EditText buscador;
-
     public static List<Productos> productosList = new ArrayList<>();
     public static ProductosAdapter productosAdapter;
     Button crearproducto, boton_eliminar;
     RecyclerView recycleProductos;
     Button salir, btnEditar, btnbuscador;
     Spinner spinner;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,14 +52,14 @@ public class Main_Inventarioo extends AppCompatActivity {
         spinner = findViewById(R.id.spinneeer);
 
         ArrayList<Estado> estadolista = new ArrayList<>();
-        estadolista.add(new Estado(1,"Disponible"));
+        estadolista.add(new Estado(1, "Disponible"));
 
-        estadolista.add(new Estado(2,"No Disponible"));
-        ArrayAdapter<Estado> adapter = new ArrayAdapter<>(this, androidx.constraintlayout.widget.R.layout.support_simple_spinner_dropdown_item,estadolista);
+        estadolista.add(new Estado(2, "No Disponible"));
+        ArrayAdapter<Estado> adapter = new ArrayAdapter<>(this, androidx.constraintlayout.widget.R.layout.support_simple_spinner_dropdown_item, estadolista);
 
         spinner.setAdapter(adapter);
 
-        crearproducto  = (Button)findViewById(R.id.boton_crear);
+        crearproducto = (Button) findViewById(R.id.boton_crear);
         crearproducto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -62,7 +67,7 @@ public class Main_Inventarioo extends AppCompatActivity {
                 startActivity(crearproducto);
             }
         });
-        boton_eliminar = (Button)findViewById(R.id.boton_eliminar);
+        boton_eliminar = (Button) findViewById(R.id.boton_eliminar);
         boton_eliminar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -73,12 +78,10 @@ public class Main_Inventarioo extends AppCompatActivity {
                         break;
                     }
                 }
-
                 if (!ProductoSeleccionado) {
                     Toast.makeText(Main_Inventarioo.this, "No se ha seleccionado ningún producto", Toast.LENGTH_SHORT).show();
                     return;
                 }
-
                 new AlertDialog.Builder(Main_Inventarioo.this)
                         .setTitle("Confirmar eliminación")
                         .setMessage("¿Estás seguro de que quieres eliminar los productos seleccionados?")
@@ -93,9 +96,7 @@ public class Main_Inventarioo extends AppCompatActivity {
                                         count++;
                                     }
                                 }
-
                                 productosAdapter.notifyDataSetChanged();
-
                                 Toast.makeText(Main_Inventarioo.this, "Se han eliminado " + count + " productos", Toast.LENGTH_SHORT).show();
                             }
                         })
@@ -118,7 +119,6 @@ public class Main_Inventarioo extends AppCompatActivity {
                         productoSeleccionado = producto;
                     }
                 }
-
                 if (productoSeleccionado == null) {
                     Toast.makeText(Main_Inventarioo.this, "Debe seleccionar un producto para editar", Toast.LENGTH_SHORT).show();
                     return;
@@ -132,7 +132,6 @@ public class Main_Inventarioo extends AppCompatActivity {
             }
         });
 
-
         RecyclerView recyclerView = findViewById(R.id.recycler1);
         productosAdapter = new ProductosAdapter(productosList, this);
         recyclerView.setAdapter(productosAdapter);
@@ -143,21 +142,24 @@ public class Main_Inventarioo extends AppCompatActivity {
         btnbuscarporcodigo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                long codigo = Long.parseLong(buscador.getText().toString());
-                Productos producto = productosAdapter.buscarProductoPorCodigo(codigo);
-                if (producto != null) {
-                    producto.setFound(true);
-                    int position = productosList.indexOf(producto);
-                    productosAdapter.notifyItemChanged(position);
-                    recyclerView.smoothScrollToPosition(position);
-                    buscador.setText("");
+                String buscadorText = buscador.getText().toString();
+                if (!buscadorText.isEmpty()) {
+                    long codigo = Long.parseLong(buscadorText);
+                    Productos producto = productosAdapter.buscarProductoPorCodigo(codigo);
+                    if (producto != null) {
+                        producto.setFound(true);
+                        int position = productosList.indexOf(producto);
+                        productosAdapter.notifyItemChanged(position);
+                        recyclerView.smoothScrollToPosition(position);
 
+                    } else {
+                        Toast.makeText(Main_Inventarioo.this, "Producto no encontrado", Toast.LENGTH_SHORT).show();
+                    }
                 } else {
-                    Toast.makeText(Main_Inventarioo.this, "Producto no encontrado", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Main_Inventarioo.this, "El campo de búsqueda está vacío", Toast.LENGTH_SHORT).show();
                 }
             }
         });
-
         Button btnScan2 = findViewById(R.id.menu_button2);
         btnScan2.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -172,7 +174,18 @@ public class Main_Inventarioo extends AppCompatActivity {
             }
         });
 
+        LinearLayout mainLayout = findViewById(R.id.mainLayoutt);
+
+        int color1 = ContextCompat.getColor(this, R.color.Color2);
+        int color2 = ContextCompat.getColor(this, R.color.Color1);
+        UiModeManager uiModeManager = (UiModeManager) getSystemService(UI_MODE_SERVICE);
+        if (uiModeManager.getNightMode() == UiModeManager.MODE_NIGHT_YES) {
+            mainLayout.setBackgroundColor(color1);
+        } else {
+            mainLayout.setBackgroundColor(color2);
+        }
     }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
@@ -187,11 +200,13 @@ public class Main_Inventarioo extends AppCompatActivity {
             super.onActivityResult(requestCode, resultCode, data);
         }
     }
+
     private void inicializarElementos() {
         recycleProductos = findViewById(R.id.recycler1);
         recycleProductos.setLayoutManager(new LinearLayoutManager(this));
 
-        productosAdapter = new ProductosAdapter(productosList,this);
+        productosAdapter = new ProductosAdapter(productosList, this);
         recycleProductos.setAdapter(productosAdapter);
     }
+
 }

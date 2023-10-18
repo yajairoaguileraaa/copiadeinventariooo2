@@ -1,7 +1,10 @@
 package com.example.myapplication.Adapter;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,6 +41,8 @@ public class ProductosAdapter extends RecyclerView.Adapter<ProductosAdapter.View
         return new ViewHolder(view);
     }
 
+
+
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Productos producto = productosList.get(position);
@@ -46,10 +51,14 @@ public class ProductosAdapter extends RecyclerView.Adapter<ProductosAdapter.View
         holder.txtCantidad.setText(producto.getCantidad());
         holder.txtPrecio.setText(producto.getPrecio());
 
-        Glide.with(context)
-                .load(producto.getFoto())
-                .centerCrop()
-                .into(holder.imgFoto);
+        String base64Image = producto.getFoto();
+        if (base64Image != null && !base64Image.isEmpty()) {
+            byte[] decodedString = Base64.decode(base64Image, Base64.DEFAULT);
+            Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+            holder.imgFoto.setImageBitmap(decodedByte);
+        } else {
+            holder.imgFoto.setImageResource(R.drawable.fotopordefectoooperoen64px);
+        }
 
         holder.checkBox.setChecked(producto.isSelected());
         holder.checkBox.setOnClickListener(new View.OnClickListener() {
@@ -67,11 +76,9 @@ public class ProductosAdapter extends RecyclerView.Adapter<ProductosAdapter.View
         } else {
             holder.itemView.setBackgroundColor(Color.WHITE);
         }
-
-
-
-
     }
+
+
 
     @Override
     public int getItemCount() {

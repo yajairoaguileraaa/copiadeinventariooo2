@@ -135,9 +135,18 @@ public class EditarProducto extends AppCompatActivity {
         }
 
         if (!codigoStr.isEmpty()) {
-            long codigo = Long.parseLong(codigoStr);
-            producto.setCodigo(codigo);
+            if (!codigoStr.matches("\\d+")) {
+                Toast.makeText(this, "El código solo puede ser numérico", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            else {
+                long codigo = Long.parseLong(codigoStr);
+                producto.setCodigo(codigo);
+            }
+
         }
+
+
 
         if (!cantidadStr.isEmpty()) {
             producto.setCantidad(cantidadStr);
