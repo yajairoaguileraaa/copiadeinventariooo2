@@ -3,9 +3,32 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
-    <color name="Color1">#49FF92</color>
-    <color name="Color2">#1E7E3E</color>
+    <color name="Color1">#fbd0d8</color>
+    <color name="Color2">#f27a93</color>
     <color name="Color3">#3F5559</color>
-    <color name="Color4">#035555</color>
-    <color name="Color5">#C0F1DE</color>
+    <color name="Color4">#961b44</color>
+    <color name="Color5">#fef2f4</color>
+
+    <color name="Color4reserva">#035555</color>
+
+    <color name="Color1reserva">#49FF92</color>
+    <color name="Color2reserva">#1E7E3E</color>
+    <color name="Color5reserva">#C0F1DE</color>
+
+
+   // 'cerise-red': {
+    //  '50': '#fef2f4',
+    //   '100': '#fde6e9',
+    //   '200': '#fbd0d8',
+    //    '300': '#f7aab9',
+    //   '400': '#f27a93',
+    //    '500': '#e63d64',
+    //   '600': '#d42a59',
+    //     '700': '#b21e4b',
+    //    '800': '#961b44',
+    //   '900': '#801b40',
+    //    '950': '#470a1f',
+    //    },
+
+
 </resources>

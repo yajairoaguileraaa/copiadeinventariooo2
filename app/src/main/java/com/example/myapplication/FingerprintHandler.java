@@ -39,7 +39,7 @@ public class FingerprintHandler {
                     public void onAuthenticationSucceeded(BiometricPrompt.AuthenticationResult result) {
                         super.onAuthenticationSucceeded(result);
                         Toast.makeText(activity, "¡Éxito!", Toast.LENGTH_SHORT).show();
-                        activity.startActivity(new Intent(activity, Main_Inventarioo.class));
+                        activity.startActivity(new Intent(activity, MainMenuDeActividades.class));
                     }
 
                     @Override
