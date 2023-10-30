@@ -115,14 +115,12 @@ public class MainMapa extends AppCompatActivity {
             double latitude = location.getLatitude();
             GeoPoint geoPoint = new GeoPoint(latitude, longitude);
 
-            // Agrega un marcador en la ubicación actual
             Marker marker = new Marker(map);
             marker.setPosition(geoPoint);
             marker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
             marker.setTitle("Estoy aquí");
             map.getOverlays().add(marker);
 
-            // Anima el zoom y el centro del mapa
             map.getController().animateTo(geoPoint);
             map.getController().zoomTo(14);
         } else {
