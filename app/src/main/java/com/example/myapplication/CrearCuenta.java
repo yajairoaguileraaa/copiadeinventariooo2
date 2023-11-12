@@ -26,7 +26,7 @@ public class CrearCuenta extends AppCompatActivity {
         edEmail = findViewById(R.id.editTextText2);
         edPassword = findViewById(R.id.editTextTextPassword);
         edConfirmarPass = findViewById(R.id.editTextTextPassword2);
-        btn = findViewById(R.id.button);
+        btn = findViewById(R.id.button9);
 
 
         btn.setOnClickListener(new View.OnClickListener() {

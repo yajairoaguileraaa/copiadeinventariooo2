@@ -43,6 +43,8 @@ public class Main_Inventarioo extends AppCompatActivity {
     Button salir, btnEditar, btnbuscador;
     Spinner spinner;
 
+    //te veo -_-
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

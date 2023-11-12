@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
                         SharedPreferences.Editor editor = sharedPreferences.edit();
                         editor.putString("usuario",usuario);
                         editor.apply();
-                        startActivity(new Intent(MainActivity.this,Main_Inventarioo.class));
+                        startActivity(new Intent(MainActivity.this, MainMenuDeActividades.class));
                     }else {
                         Toast.makeText(getApplicationContext(),"Contraseña o usuario incorrecto",Toast.LENGTH_SHORT).show();
 
@@ -72,14 +72,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-        irinventario = (Button)findViewById(R.id.button5);
-        irinventario.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent irinventario = new Intent(MainActivity.this, Main_Inventarioo.class);
-                startActivity(irinventario);
-            }
-        });
+
         Button cerrar= (Button) findViewById(R.id.button4);
         cerrar.setOnClickListener(new View.OnClickListener() {
             @Override
